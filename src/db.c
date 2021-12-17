@@ -194,7 +194,7 @@ error_end:
   return (void*)0;
 }
 
-sds db_list(MDB_txn* txn, MDB_dbi db_handle) {
+sds db_list_items(MDB_txn* txn, MDB_dbi db_handle) {
   START_ZONE;
   MDB_cursor* cursor = {0};
   int rc = mdb_cursor_open(txn, db_handle, &cursor);
@@ -209,14 +209,41 @@ sds db_list(MDB_txn* txn, MDB_dbi db_handle) {
     message_error("db::db_list failed in retrieving the first key/data pair");
     goto error_end;
   }
-  sds result = sdscatfmt(sdsempty(), "%s -- %s\n", key.mv_data, data.mv_data);
+  sds listing = sdscatfmt(sdsempty(), "%s -- %s\n", key.mv_data, data.mv_data);
   while (mdb_cursor_get(cursor, &key, &data, MDB_NEXT) == 0) {
-    result = sdscatfmt(result, "%s -- %s\n", key.mv_data, data.mv_data);
+    listing = sdscatfmt(listing, "%s -- %s\n", key.mv_data, data.mv_data);
   }
   END_ZONE;
-  return result;
+  return listing;
 error_end:
   END_ZONE;
-  sdsfree(result);
+  sdsfree(listing);
+  return (void*)0;
+}
+
+sds db_list_keys(MDB_txn* txn, MDB_dbi db_handle) {
+  START_ZONE;
+  MDB_cursor* cursor = {0};
+  int rc = mdb_cursor_open(txn, db_handle, &cursor);
+  if (rc != 0) {
+    message_error("db::db_list failed in creating a cursor handle");
+    return (void*)0;
+  }
+  MDB_val key = {0};
+  MDB_val data = {0};
+  rc = mdb_cursor_get(cursor, &key, &data, MDB_FIRST);
+  if (rc != 0) {
+    message_error("db::db_list failed in retrieving the first key/data pair");
+    goto error_end;
+  }
+  sds listing = sdscatfmt(sdsempty(), "%s\n", key.mv_data);
+  while (mdb_cursor_get(cursor, &key, &data, MDB_NEXT) == 0) {
+    listing = sdscatfmt(listing, "%s\n", key.mv_data);
+  }
+  END_ZONE;
+  return listing;
+error_end:
+  END_ZONE;
+  sdsfree(listing);
   return (void*)0;
 }

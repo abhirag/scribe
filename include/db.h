@@ -12,6 +12,7 @@ int db_txn_terminate(MDB_txn* txn, bool commit);
 MDB_dbi db_get_handle(MDB_txn* txn, char const* name, bool create_if_not_exist);
 int db_put(MDB_txn* txn, MDB_dbi db_handle, char* key, char* value);
 sds db_get(MDB_txn* txn, MDB_dbi db_handle, char* key);
-sds db_list(MDB_txn* txn, MDB_dbi db_handle);
+sds db_list_items(MDB_txn* txn, MDB_dbi db_handle);
+sds db_list_keys(MDB_txn* txn, MDB_dbi db_handle);
 
 #endif  // SCRIBE_DB_H
