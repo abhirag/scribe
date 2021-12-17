@@ -21,16 +21,37 @@ janet = janet_sp.get_variable('janet_dep')
 lmdb_sp = subproject('lmdb')
 lmdb = lmdb_sp.get_variable('lmdb_dep')
 
+mkdirp_sp = subproject('mkdirp')
+mkdirp = mkdirp_sp.get_variable('mkdirp_dep')
+
 inc = include_directories('include', 'dev_deps/tracy')
 scribe_src = files('src/scribe.c')
+db_src = files('src/db.c')
 tracy_src = files('dev_deps/tracy/TracyClient.cpp')
+c_parser_src = files('src/parsers/c_parser.c')
+repl_src = files('src/repl.c')
+lisp_src = files('src/lisp.c')
+indexer_src = files('src/indexer.c')
+core_queries_src = files('src/core_queries.c')
 
 subdir('tests')
 
 scribe = executable('scribe', 
-                    [scribe_src, tracy_src, 'src/main.c'],
+                    [indexer_src, scribe_src, db_src, tracy_src, c_parser_src, repl_src, lisp_src, core_queries_src, 'src/main.c'],
                     include_directories: inc,
-                    dependencies: [sds, log, tree_sitter, lmdb])
+                    dependencies: [sds, log, tree_sitter, lmdb, mkdirp, janet])
+
+test_indexer = executable('test_indexer',
+                          [indexer_src, tracy_src, lisp_src, db_src],
+                          include_directories: inc,
+                          dependencies: [sds, log, mkdirp, janet, lmdb],
+                          c_args: ['-D UNIT_TEST_INDEXER'])
+
+test_core_queries = executable('test_core_queries',
+                               [core_queries_src, indexer_src, tracy_src, lisp_src, db_src],
+                               include_directories: inc,
+                               dependencies: [sds, log, mkdirp, janet, lmdb],
+                               c_args: ['-D UNIT_TEST_CORE_QUERIES'])
 
 
 
