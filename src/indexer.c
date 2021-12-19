@@ -35,6 +35,10 @@ static int execute_scribe_file(char const* path);
 
 static char** exts = (void*)0;
 static file_info* finfos = (void*)0;
+static struct {
+  char* key;
+  bool value;
+}* pathset = (void*)0;
 
 static char* read_file_to_str(const char* path, unsigned int* file_len_out) {
   START_ZONE;
@@ -187,6 +191,7 @@ static int execute_scribe_file(char const* path) {
 
 int index_files(char const* path) {
   START_ZONE;
+  shdefault(pathset, false);
   MDB_env* env = (void*)0;
   MDB_txn* txn = (void*)0;
   int rc = execute_scribe_file(path);
@@ -220,6 +225,7 @@ int index_files(char const* path) {
   }
   for (int i = 0; i < arrlen(finfos); ++i) {
     file_info finfo = finfos[i];
+    shput(pathset, finfo.path, true);
     MDB_dbi db_handle = db_get_handle(txn, finfo.path, true);
     if (db_handle == 0) {
       log_fatal(
@@ -230,6 +236,20 @@ int index_files(char const* path) {
     rc = db_put(txn, db_handle, finfo.name, finfo.contents);
     if (rc != 0) {
       log_fatal("indexer::index_files failed in putting key: %s", finfo.name);
+      goto error_end;
+    }
+  }
+  MDB_dbi db_handle_paths = db_get_handle(txn, "paths", true);
+  if (db_handle_paths == 0) {
+    log_fatal(
+        "indexer::index_files failed in creating db handle for name: paths");
+    goto error_end;
+  }
+  for (int i = 0; i < shlen(pathset); i += 1) {
+    rc = db_put(txn, db_handle_paths, pathset[i].key, "");
+    if (rc != 0) {
+      log_fatal("indexer::index_files failed in putting key: %s",
+                pathset[i].key);
       goto error_end;
     }
   }
@@ -257,6 +277,7 @@ void indexer_terminate(void) {
     free(finfo.contents);
   }
   arrfree(finfos);
+  hmfree(pathset);
   END_ZONE;
 }
 
