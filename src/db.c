@@ -221,7 +221,7 @@ error_end:
   return (void*)0;
 }
 
-sds db_list_keys(MDB_txn* txn, MDB_dbi db_handle) {
+sds db_list_keys(MDB_txn* txn, MDB_dbi db_handle, bool omit_sub_keys) {
   START_ZONE;
   MDB_cursor* cursor = {0};
   int rc = mdb_cursor_open(txn, db_handle, &cursor);
@@ -238,6 +238,9 @@ sds db_list_keys(MDB_txn* txn, MDB_dbi db_handle) {
   }
   sds listing = sdscatfmt(sdsempty(), "%s\n", key.mv_data);
   while (mdb_cursor_get(cursor, &key, &data, MDB_NEXT) == 0) {
+    if (omit_sub_keys && strstr(key.mv_data, "::")) {
+      continue;
+    }
     listing = sdscatfmt(listing, "%s\n", key.mv_data);
   }
   END_ZONE;

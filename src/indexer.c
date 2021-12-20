@@ -35,6 +35,7 @@ static int execute_scribe_file(char const* path);
 
 static char** exts = (void*)0;
 static file_info* finfos = (void*)0;
+static char const* language = "";
 static struct {
   char* key;
   bool value;
@@ -142,6 +143,7 @@ static char* read_scribe_file(char const* path) {
 
 static int set_language(char const* lang) {
   START_ZONE;
+  language = lang;
   if (strcmp(lang, "c") == 0) {
     arrput(exts, ".c");
     arrput(exts, ".h");
@@ -191,6 +193,7 @@ static int execute_scribe_file(char const* path) {
 
 int index_files(char const* path) {
   START_ZONE;
+  int rc = 0;
   shdefault(pathset, false);
   sds length_key = sdsempty();
   sds length_value = sdsempty();
@@ -198,11 +201,6 @@ int index_files(char const* path) {
   sds num_lines_value = sdsempty();
   MDB_env* env = (void*)0;
   MDB_txn* txn = (void*)0;
-  int rc = execute_scribe_file(path);
-  if (rc != 0) {
-    message_fatal("indexer::index_files failed in executing the scribe file");
-    goto error_end;
-  }
   collect_file_info(path);
   if (!finfos) {
     message_fatal(
@@ -212,11 +210,6 @@ int index_files(char const* path) {
   }
   char db_dir_path[1024];
   path_concat(path, "scribe_db", db_dir_path, 1024);
-  rc = mkdirp(db_dir_path, 0777);
-  if (rc != 0) {
-    message_fatal("indexer::index_files failed in creating db directory");
-    goto error_end;
-  }
   env = db_env_init(db_dir_path, false, 100);
   if (!env) {
     message_fatal("indexer::index_files failed in creating db environment");
@@ -294,6 +287,63 @@ error_end:
   sdsfree(length_value);
   sdsfree(num_lines_key);
   sdsfree(num_lines_value);
+  END_ZONE;
+  return -1;
+}
+
+int persist_project_details(char const* path) {
+  START_ZONE;
+  MDB_env* env = (void*)0;
+  MDB_txn* txn = (void*)0;
+  int rc = execute_scribe_file(path);
+  if (rc != 0) {
+    message_fatal(
+        "indexer::persist_project_details failed in executing the scribe file");
+    goto error_end;
+  }
+  char db_dir_path[1024];
+  path_concat(path, "scribe_db", db_dir_path, 1024);
+  rc = mkdirp(db_dir_path, 0777);
+  if (rc != 0) {
+    message_fatal(
+        "indexer::persist_project_details failed in creating db directory");
+    goto error_end;
+  }
+  env = db_env_init(db_dir_path, false, 100);
+  if (!env) {
+    message_fatal(
+        "indexer::persist_project_details failed in creating db environment");
+    goto error_end;
+  }
+  txn = db_txn_init(env, false);
+  if (!txn) {
+    message_fatal(
+        "indexer::persist_project_details failed in creating transaction");
+    goto error_end;
+  }
+  MDB_dbi db_handle = db_get_handle(txn, "project", true);
+  if (db_handle == 0) {
+    log_fatal(
+        "indexer::persist_project_details failed in creating db handle for "
+        "name: project");
+    goto error_end;
+  }
+  rc = db_put(txn, db_handle, "language", language);
+  if (rc != 0) {
+    log_fatal(
+        "indexer::persist_project_details failed in putting key: language");
+    goto error_end;
+  }
+  rc = db_txn_terminate(txn, true);
+  if (rc != 0) {
+    goto error_end;
+  }
+  db_env_terminate(env);
+  END_ZONE;
+  return 0;
+error_end:
+  db_txn_terminate(txn, false);
+  db_env_terminate(env);
   END_ZONE;
   return -1;
 }

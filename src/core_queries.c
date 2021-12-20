@@ -55,7 +55,7 @@ static sds list_files(JanetString path) {
         path);
     goto error_end;
   }
-  sds listing = db_list_keys(txn, db_handle);
+  sds listing = db_list_keys(txn, db_handle, true);
   if (!listing) {
     message_fatal("core_queries::list_files failed in listing keys");
     goto error_end;
@@ -90,7 +90,7 @@ static sds list_paths(void) {
         "paths");
     goto error_end;
   }
-  sds listing = db_list_keys(txn, db_handle);
+  sds listing = db_list_keys(txn, db_handle, false);
   if (!listing) {
     message_fatal("core_queries::list_paths failed in listing keys");
     goto error_end;
