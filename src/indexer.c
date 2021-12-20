@@ -192,6 +192,10 @@ static int execute_scribe_file(char const* path) {
 int index_files(char const* path) {
   START_ZONE;
   shdefault(pathset, false);
+  sds length_key = sdsempty();
+  sds length_value = sdsempty();
+  sds num_lines_key = sdsempty();
+  sds num_lines_value = sdsempty();
   MDB_env* env = (void*)0;
   MDB_txn* txn = (void*)0;
   int rc = execute_scribe_file(path);
@@ -238,6 +242,25 @@ int index_files(char const* path) {
       log_fatal("indexer::index_files failed in putting key: %s", finfo.name);
       goto error_end;
     }
+    sdsclear(length_key);
+    sdsclear(length_value);
+    sdsclear(num_lines_key);
+    sdsclear(num_lines_value);
+    length_key = sdscatfmt(length_key, "%S::%s", finfo.name, "length");
+    length_value = sdscatfmt(length_value, "%u", finfo.length);
+    num_lines_key = sdscatfmt(num_lines_key, "%S::%s", finfo.name, "num_lines");
+    num_lines_value = sdscatfmt(num_lines_value, "%u", finfo.num_lines);
+    rc = db_put(txn, db_handle, length_key, length_value);
+    if (rc != 0) {
+      log_fatal("indexer::index_files failed in putting key: %s", length_key);
+      goto error_end;
+    }
+    rc = db_put(txn, db_handle, num_lines_key, num_lines_value);
+    if (rc != 0) {
+      log_fatal("indexer::index_files failed in putting key: %s",
+                num_lines_key);
+      goto error_end;
+    }
   }
   MDB_dbi db_handle_paths = db_get_handle(txn, "paths", true);
   if (db_handle_paths == 0) {
@@ -258,11 +281,19 @@ int index_files(char const* path) {
     goto error_end;
   }
   db_env_terminate(env);
+  sdsfree(length_key);
+  sdsfree(length_value);
+  sdsfree(num_lines_key);
+  sdsfree(num_lines_value);
   END_ZONE;
   return 0;
 error_end:
   db_txn_terminate(txn, false);
   db_env_terminate(env);
+  sdsfree(length_key);
+  sdsfree(length_value);
+  sdsfree(num_lines_key);
+  sdsfree(num_lines_value);
   END_ZONE;
   return -1;
 }
