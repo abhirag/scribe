@@ -7,11 +7,11 @@
 
 #include "db.h"
 #include "lisp.h"
+#include "querier.h"
 #include "trace.h"
 
 INIT_TRACE;
 
-static bool db_exists(char const* path);
 static sds list_files(JanetString path);
 static sds list_paths(void);
 static sds get_file_src(JanetString path, JanetString name);
@@ -22,19 +22,6 @@ static long int get_file_num_lines(JanetString path, JanetString name);
 static sds get_file_src_slice(JanetString path, JanetString name,
                               int64_t start_line, int64_t end_line);
 static Janet cfun_file_src_slice(int32_t argc, Janet* argv);
-
-static bool db_exists(char const* path) {
-  START_ZONE;
-  char db_dir_path[1024];
-  path_concat(path, "scribe_db", db_dir_path, 1024);
-  int rc = cf_file_exists(db_dir_path);
-  if (rc == 1) {
-    END_ZONE;
-    return true;
-  }
-  END_ZONE;
-  return false;
-}
 
 static sds list_files(JanetString path) {
   START_ZONE;

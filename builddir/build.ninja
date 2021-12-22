@@ -164,12 +164,22 @@ build scribe.p/src_core_queries.c.o: c_COMPILER ../src/core_queries.c
  DEPFILE_UNQUOTED = scribe.p/src_core_queries.c.o.d
  ARGS = -Iscribe.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -Isubprojects/lmdb -I../subprojects/lmdb -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1
 
+build scribe.p/src_querier.c.o: c_COMPILER ../src/querier.c
+ DEPFILE = scribe.p/src_querier.c.o.d
+ DEPFILE_UNQUOTED = scribe.p/src_querier.c.o.d
+ ARGS = -Iscribe.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -Isubprojects/lmdb -I../subprojects/lmdb -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1
+
+build scribe.p/src_tree_sitter.c.o: c_COMPILER ../src/tree_sitter.c
+ DEPFILE = scribe.p/src_tree_sitter.c.o.d
+ DEPFILE_UNQUOTED = scribe.p/src_tree_sitter.c.o.d
+ ARGS = -Iscribe.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -Isubprojects/lmdb -I../subprojects/lmdb -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1
+
 build scribe.p/src_main.c.o: c_COMPILER ../src/main.c
  DEPFILE = scribe.p/src_main.c.o.d
  DEPFILE_UNQUOTED = scribe.p/src_main.c.o.d
  ARGS = -Iscribe.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -Isubprojects/lmdb -I../subprojects/lmdb -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1
 
-build scribe: cpp_LINKER scribe.p/src_indexer.c.o scribe.p/src_scribe.c.o scribe.p/src_db.c.o scribe.p/dev_deps_tracy_TracyClient.cpp.o scribe.p/src_parsers_c_parser.c.o scribe.p/src_repl.c.o scribe.p/src_lisp.c.o scribe.p/src_core_queries.c.o scribe.p/src_main.c.o | /usr/lib/gcc/x86_64-linux-gnu/9/libstdc++.a /usr/lib/x86_64-linux-gnu/libdl-2.31.so /usr/lib/x86_64-linux-gnu/libdl.a /usr/lib/x86_64-linux-gnu/libm.a /usr/lib/x86_64-linux-gnu/libm.so /usr/lib/x86_64-linux-gnu/libpthread-2.31.so /usr/lib/x86_64-linux-gnu/libpthread.a /usr/lib/x86_64-linux-gnu/librt-2.31.so /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28 subprojects/janet/libjanet.a subprojects/lmdb/liblmdb.a subprojects/log/liblog.a subprojects/mkdirp/libmkdirp.a subprojects/sds/libsds.a subprojects/tree_sitter/libtree_sitter.a
+build scribe: cpp_LINKER scribe.p/src_indexer.c.o scribe.p/src_scribe.c.o scribe.p/src_db.c.o scribe.p/dev_deps_tracy_TracyClient.cpp.o scribe.p/src_parsers_c_parser.c.o scribe.p/src_repl.c.o scribe.p/src_lisp.c.o scribe.p/src_core_queries.c.o scribe.p/src_querier.c.o scribe.p/src_tree_sitter.c.o scribe.p/src_main.c.o | /usr/lib/gcc/x86_64-linux-gnu/9/libstdc++.a /usr/lib/x86_64-linux-gnu/libdl-2.31.so /usr/lib/x86_64-linux-gnu/libdl.a /usr/lib/x86_64-linux-gnu/libm.a /usr/lib/x86_64-linux-gnu/libm.so /usr/lib/x86_64-linux-gnu/libpthread-2.31.so /usr/lib/x86_64-linux-gnu/libpthread.a /usr/lib/x86_64-linux-gnu/librt-2.31.so /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28 subprojects/janet/libjanet.a subprojects/lmdb/liblmdb.a subprojects/log/liblog.a subprojects/mkdirp/libmkdirp.a subprojects/sds/libsds.a subprojects/tree_sitter/libtree_sitter.a
  LINK_ARGS = -Wl,--as-needed -Wl,--no-undefined -Wl,--start-group -lm -lstdc++ -ldl -lrt -lpthread subprojects/sds/libsds.a subprojects/log/liblog.a subprojects/tree_sitter/libtree_sitter.a subprojects/lmdb/liblmdb.a subprojects/mkdirp/libmkdirp.a subprojects/janet/libjanet.a -Wl,--end-group
 
 build test_indexer.p/src_indexer.c.o: c_COMPILER ../src/indexer.c
@@ -220,7 +230,12 @@ build test_core_queries.p/src_db.c.o: c_COMPILER ../src/db.c
  DEPFILE_UNQUOTED = test_core_queries.p/src_db.c.o.d
  ARGS = -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D$ UNIT_TEST_CORE_QUERIES'
 
-build test_core_queries: cpp_LINKER test_core_queries.p/src_core_queries.c.o test_core_queries.p/src_indexer.c.o test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o test_core_queries.p/src_lisp.c.o test_core_queries.p/src_db.c.o | /usr/lib/gcc/x86_64-linux-gnu/9/libstdc++.a /usr/lib/x86_64-linux-gnu/libdl-2.31.so /usr/lib/x86_64-linux-gnu/libdl.a /usr/lib/x86_64-linux-gnu/libm.a /usr/lib/x86_64-linux-gnu/libm.so /usr/lib/x86_64-linux-gnu/libpthread-2.31.so /usr/lib/x86_64-linux-gnu/libpthread.a /usr/lib/x86_64-linux-gnu/librt-2.31.so /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28 subprojects/janet/libjanet.a subprojects/lmdb/liblmdb.a subprojects/log/liblog.a subprojects/mkdirp/libmkdirp.a subprojects/sds/libsds.a
+build test_core_queries.p/src_querier.c.o: c_COMPILER ../src/querier.c
+ DEPFILE = test_core_queries.p/src_querier.c.o.d
+ DEPFILE_UNQUOTED = test_core_queries.p/src_querier.c.o.d
+ ARGS = -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D$ UNIT_TEST_CORE_QUERIES'
+
+build test_core_queries: cpp_LINKER test_core_queries.p/src_core_queries.c.o test_core_queries.p/src_indexer.c.o test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o test_core_queries.p/src_lisp.c.o test_core_queries.p/src_db.c.o test_core_queries.p/src_querier.c.o | /usr/lib/gcc/x86_64-linux-gnu/9/libstdc++.a /usr/lib/x86_64-linux-gnu/libdl-2.31.so /usr/lib/x86_64-linux-gnu/libdl.a /usr/lib/x86_64-linux-gnu/libm.a /usr/lib/x86_64-linux-gnu/libm.so /usr/lib/x86_64-linux-gnu/libpthread-2.31.so /usr/lib/x86_64-linux-gnu/libpthread.a /usr/lib/x86_64-linux-gnu/librt-2.31.so /usr/lib/x86_64-linux-gnu/librt.a /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.28 subprojects/janet/libjanet.a subprojects/lmdb/liblmdb.a subprojects/log/liblog.a subprojects/mkdirp/libmkdirp.a subprojects/sds/libsds.a
  LINK_ARGS = -Wl,--as-needed -Wl,--no-undefined -Wl,--start-group -lm -lstdc++ -ldl -lrt -lpthread subprojects/sds/libsds.a subprojects/log/liblog.a subprojects/mkdirp/libmkdirp.a subprojects/janet/libjanet.a subprojects/lmdb/liblmdb.a -Wl,--end-group
 
 # Test rules
@@ -283,13 +298,13 @@ build meson-clean: CUSTOM_COMMAND PHONY
  COMMAND = /home/anurag/bin/ninja -t clean
  description = Cleaning
 
-build build.ninja: REGENERATE_BUILD ../subprojects/mkdirp/meson.build ../subprojects/sds/meson.build ../subprojects/log/meson.build ../subprojects/janet/meson.build ../subprojects/lmdb/meson.build ../meson.build ../subprojects/tree_sitter/meson.build ../tests/meson.build meson-private/coredata.dat
+build build.ninja: REGENERATE_BUILD ../subprojects/tree_sitter/meson.build ../subprojects/log/meson.build ../subprojects/sds/meson.build ../meson.build ../subprojects/lmdb/meson.build ../subprojects/mkdirp/meson.build ../subprojects/janet/meson.build ../tests/meson.build meson-private/coredata.dat
  pool = console
 
 build reconfigure: REGENERATE_BUILD PHONY
  pool = console
 
-build ../subprojects/mkdirp/meson.build ../subprojects/sds/meson.build ../subprojects/log/meson.build ../subprojects/janet/meson.build ../subprojects/lmdb/meson.build ../meson.build ../subprojects/tree_sitter/meson.build ../tests/meson.build meson-private/coredata.dat: phony 
+build ../subprojects/tree_sitter/meson.build ../subprojects/log/meson.build ../subprojects/sds/meson.build ../meson.build ../subprojects/lmdb/meson.build ../subprojects/mkdirp/meson.build ../subprojects/janet/meson.build ../tests/meson.build meson-private/coredata.dat: phony 
 
 default all
 

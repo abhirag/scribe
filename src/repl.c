@@ -1,6 +1,6 @@
 #include "repl.h"
 
-#include "core_queries.h"
+#include "querier.h"
 /*
  * Copyright (c) 2021 Calvin Rose
  *
@@ -1012,7 +1012,7 @@ int launch_repl(int argc, char** argv) {
   /* Get core env */
   env = janet_core_env(replacements);
 
-  register_core_module(env);
+  register_modules(env);
 
   /* Create args tuple */
   args = janet_array(argc);

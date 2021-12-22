@@ -187,6 +187,7 @@ static int execute_scribe_file(char const* path) {
   lisp_register_module(env, "config", config_cfuns);
   int rc = lisp_execute_script(env, contents);
   free(contents);
+  lisp_terminate();
   END_ZONE;
   return rc;
 }

@@ -1,4 +1,4 @@
-Build started at 2021-12-17T04:48:36.164360
+Build started at 2021-12-21T12:34:50.890439
 Main binary: /usr/bin/python3
 Build Options: -Dbackend=ninja
 Python system: Linux
@@ -109,8 +109,8 @@ scribe 0.1
 
 Found ninja-1.10.2 at /home/anurag/bin/ninja
 Running compile:
-Working directory:  /home/anurag/scribe/builddir/meson-private/tmpbny1_088
-Command line:  c++ /home/anurag/scribe/builddir/meson-private/tmpbny1_088/testfile.cpp -o /home/anurag/scribe/builddir/meson-private/tmpbny1_088/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+Working directory:  /home/anurag/scribe/builddir/meson-private/tmpa0v_6d7v
+Command line:  c++ /home/anurag/scribe/builddir/meson-private/tmpa0v_6d7v/testfile.cpp -o /home/anurag/scribe/builddir/meson-private/tmpa0v_6d7v/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
 
 Code:
  
