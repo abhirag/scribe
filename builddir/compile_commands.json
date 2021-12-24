@@ -127,6 +127,12 @@
   },
   {
     "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Iscribe.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -Isubprojects/lmdb -I../subprojects/lmdb -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 -MD -MQ scribe.p/src_c_queries.c.o -MF scribe.p/src_c_queries.c.o.d -o scribe.p/src_c_queries.c.o -c ../src/c_queries.c",
+    "file": "../src/c_queries.c",
+    "output": "scribe.p/src_c_queries.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
     "command": "cc -Iscribe.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -Isubprojects/lmdb -I../subprojects/lmdb -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 -MD -MQ scribe.p/src_main.c.o -MF scribe.p/src_main.c.o.d -o scribe.p/src_main.c.o -c ../src/main.c",
     "file": "../src/main.c",
     "output": "scribe.p/src_main.c.o"
@@ -157,38 +163,110 @@
   },
   {
     "directory": "/home/anurag/scribe/builddir",
-    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_core_queries.c.o -MF test_core_queries.p/src_core_queries.c.o.d -o test_core_queries.p/src_core_queries.c.o -c ../src/core_queries.c",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_core_queries.c.o -MF test_core_queries.p/src_core_queries.c.o.d -o test_core_queries.p/src_core_queries.c.o -c ../src/core_queries.c",
     "file": "../src/core_queries.c",
     "output": "test_core_queries.p/src_core_queries.c.o"
   },
   {
     "directory": "/home/anurag/scribe/builddir",
-    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_indexer.c.o -MF test_core_queries.p/src_indexer.c.o.d -o test_core_queries.p/src_indexer.c.o -c ../src/indexer.c",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_indexer.c.o -MF test_core_queries.p/src_indexer.c.o.d -o test_core_queries.p/src_indexer.c.o -c ../src/indexer.c",
     "file": "../src/indexer.c",
     "output": "test_core_queries.p/src_indexer.c.o"
   },
   {
     "directory": "/home/anurag/scribe/builddir",
-    "command": "c++ -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wpedantic -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 -MD -MQ test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o -MF test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o.d -o test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o -c ../dev_deps/tracy/TracyClient.cpp",
+    "command": "c++ -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wpedantic -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 -MD -MQ test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o -MF test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o.d -o test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o -c ../dev_deps/tracy/TracyClient.cpp",
     "file": "../dev_deps/tracy/TracyClient.cpp",
     "output": "test_core_queries.p/dev_deps_tracy_TracyClient.cpp.o"
   },
   {
     "directory": "/home/anurag/scribe/builddir",
-    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_lisp.c.o -MF test_core_queries.p/src_lisp.c.o.d -o test_core_queries.p/src_lisp.c.o -c ../src/lisp.c",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_lisp.c.o -MF test_core_queries.p/src_lisp.c.o.d -o test_core_queries.p/src_lisp.c.o -c ../src/lisp.c",
     "file": "../src/lisp.c",
     "output": "test_core_queries.p/src_lisp.c.o"
   },
   {
     "directory": "/home/anurag/scribe/builddir",
-    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_db.c.o -MF test_core_queries.p/src_db.c.o.d -o test_core_queries.p/src_db.c.o -c ../src/db.c",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_db.c.o -MF test_core_queries.p/src_db.c.o.d -o test_core_queries.p/src_db.c.o -c ../src/db.c",
     "file": "../src/db.c",
     "output": "test_core_queries.p/src_db.c.o"
   },
   {
     "directory": "/home/anurag/scribe/builddir",
-    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_querier.c.o -MF test_core_queries.p/src_querier.c.o.d -o test_core_queries.p/src_querier.c.o -c ../src/querier.c",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_querier.c.o -MF test_core_queries.p/src_querier.c.o.d -o test_core_queries.p/src_querier.c.o -c ../src/querier.c",
     "file": "../src/querier.c",
     "output": "test_core_queries.p/src_querier.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_c_queries.c.o -MF test_core_queries.p/src_c_queries.c.o.d -o test_core_queries.p/src_c_queries.c.o -c ../src/c_queries.c",
+    "file": "../src/c_queries.c",
+    "output": "test_core_queries.p/src_c_queries.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_tree_sitter.c.o -MF test_core_queries.p/src_tree_sitter.c.o.d -o test_core_queries.p/src_tree_sitter.c.o -c ../src/tree_sitter.c",
+    "file": "../src/tree_sitter.c",
+    "output": "test_core_queries.p/src_tree_sitter.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_core_queries.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_CORE_QUERIES' -MD -MQ test_core_queries.p/src_parsers_c_parser.c.o -MF test_core_queries.p/src_parsers_c_parser.c.o.d -o test_core_queries.p/src_parsers_c_parser.c.o -c ../src/parsers/c_parser.c",
+    "file": "../src/parsers/c_parser.c",
+    "output": "test_core_queries.p/src_parsers_c_parser.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_indexer.c.o -MF test_tree_sitter.p/src_indexer.c.o.d -o test_tree_sitter.p/src_indexer.c.o -c ../src/indexer.c",
+    "file": "../src/indexer.c",
+    "output": "test_tree_sitter.p/src_indexer.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "c++ -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wpedantic -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 -MD -MQ test_tree_sitter.p/dev_deps_tracy_TracyClient.cpp.o -MF test_tree_sitter.p/dev_deps_tracy_TracyClient.cpp.o.d -o test_tree_sitter.p/dev_deps_tracy_TracyClient.cpp.o -c ../dev_deps/tracy/TracyClient.cpp",
+    "file": "../dev_deps/tracy/TracyClient.cpp",
+    "output": "test_tree_sitter.p/dev_deps_tracy_TracyClient.cpp.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_lisp.c.o -MF test_tree_sitter.p/src_lisp.c.o.d -o test_tree_sitter.p/src_lisp.c.o -c ../src/lisp.c",
+    "file": "../src/lisp.c",
+    "output": "test_tree_sitter.p/src_lisp.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_db.c.o -MF test_tree_sitter.p/src_db.c.o.d -o test_tree_sitter.p/src_db.c.o -c ../src/db.c",
+    "file": "../src/db.c",
+    "output": "test_tree_sitter.p/src_db.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_tree_sitter.c.o -MF test_tree_sitter.p/src_tree_sitter.c.o.d -o test_tree_sitter.p/src_tree_sitter.c.o -c ../src/tree_sitter.c",
+    "file": "../src/tree_sitter.c",
+    "output": "test_tree_sitter.p/src_tree_sitter.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_parsers_c_parser.c.o -MF test_tree_sitter.p/src_parsers_c_parser.c.o.d -o test_tree_sitter.p/src_parsers_c_parser.c.o -c ../src/parsers/c_parser.c",
+    "file": "../src/parsers/c_parser.c",
+    "output": "test_tree_sitter.p/src_parsers_c_parser.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_c_queries.c.o -MF test_tree_sitter.p/src_c_queries.c.o.d -o test_tree_sitter.p/src_c_queries.c.o -c ../src/c_queries.c",
+    "file": "../src/c_queries.c",
+    "output": "test_tree_sitter.p/src_c_queries.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_querier.c.o -MF test_tree_sitter.p/src_querier.c.o.d -o test_tree_sitter.p/src_querier.c.o -c ../src/querier.c",
+    "file": "../src/querier.c",
+    "output": "test_tree_sitter.p/src_querier.c.o"
+  },
+  {
+    "directory": "/home/anurag/scribe/builddir",
+    "command": "cc -Itest_tree_sitter.p -I. -I.. -I../include -I../dev_deps/tracy -Isubprojects/sds -I../subprojects/sds -Isubprojects/log -I../subprojects/log -Isubprojects/mkdirp -I../subprojects/mkdirp -Isubprojects/janet -I../subprojects/janet -Isubprojects/lmdb -I../subprojects/lmdb -I../subprojects/tree_sitter/lib/src -I../subprojects/tree_sitter/lib/include -fdiagnostics-color=always -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wextra -Wpedantic -std=c11 -g -DTRACY_ENABLE=1 -DTRACY_NO_EXIT=1 '-D UNIT_TEST_TREE_SITTER' -MD -MQ test_tree_sitter.p/src_core_queries.c.o -MF test_tree_sitter.p/src_core_queries.c.o.d -o test_tree_sitter.p/src_core_queries.c.o -c ../src/core_queries.c",
+    "file": "../src/core_queries.c",
+    "output": "test_tree_sitter.p/src_core_queries.c.o"
   }
 ]

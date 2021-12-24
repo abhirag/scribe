@@ -35,12 +35,13 @@ indexer_src = files('src/indexer.c')
 core_queries_src = files('src/core_queries.c')
 querier_src = files('src/querier.c')
 tree_sitter_src = files('src/tree_sitter.c')
+c_queries_src = files('src/c_queries.c')
 
 subdir('tests')
 
 scribe = executable('scribe', 
                     [indexer_src, scribe_src, db_src, tracy_src, c_parser_src, repl_src, lisp_src,
-                    core_queries_src, querier_src, tree_sitter_src, 'src/main.c'],
+                    core_queries_src, querier_src, tree_sitter_src, c_queries_src, 'src/main.c'],
                     include_directories: inc,
                     dependencies: [sds, log, tree_sitter, lmdb, mkdirp, janet])
 
@@ -51,10 +52,16 @@ test_indexer = executable('test_indexer',
                           c_args: ['-D UNIT_TEST_INDEXER'])
 
 test_core_queries = executable('test_core_queries',
-                               [core_queries_src, indexer_src, tracy_src, lisp_src, db_src, querier_src],
+                               [core_queries_src, indexer_src, tracy_src, lisp_src, db_src, querier_src, c_queries_src, tree_sitter_src, c_parser_src],
                                include_directories: inc,
-                               dependencies: [sds, log, mkdirp, janet, lmdb],
+                               dependencies: [sds, log, mkdirp, janet, lmdb, tree_sitter],
                                c_args: ['-D UNIT_TEST_CORE_QUERIES'])
+
+test_tree_sitter = executable('test_tree_sitter',
+                              [indexer_src, tracy_src, lisp_src, db_src, tree_sitter_src, c_parser_src, c_queries_src, querier_src, core_queries_src],
+                              include_directories: inc,
+                              dependencies: [sds, log, mkdirp, janet, lmdb, tree_sitter],
+                              c_args: ['-D UNIT_TEST_TREE_SITTER'])
 
 
 

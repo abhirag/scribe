@@ -5,6 +5,7 @@
 #include <sds.h>
 #include <stdbool.h>
 
+#include "c_queries.h"
 #include "core_queries.h"
 #include "db.h"
 #include "trace.h"
@@ -73,6 +74,7 @@ void register_modules(JanetTable* env) {
   }
   if (sdscmp(lang, c_lang) == 0) {
     register_core_module(env);
+    register_c_module(env);
   }
   sdsfree(lang);
   sdsfree(c_lang);
