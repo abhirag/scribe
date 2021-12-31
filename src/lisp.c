@@ -25,9 +25,9 @@ void lisp_register_module(JanetTable* env, char const* module_name,
   END_ZONE;
 }
 
-int lisp_execute_script(JanetTable* env, char const* src) {
+int lisp_execute_script(JanetTable* env, char const* src, Janet* out) {
   START_ZONE;
-  int rc = janet_dostring(env, src, "main", NULL);
+  int rc = janet_dostring(env, src, "main", out);
   END_ZONE;
   return rc;
 }

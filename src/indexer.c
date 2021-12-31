@@ -25,7 +25,6 @@ struct file_info {
   unsigned int num_lines;
 };
 
-static char* read_file_to_str(const char* path, unsigned int* file_len_out);
 static void get_file_info(cf_file_t* file, void* udata);
 static void collect_file_info(char const* path);
 static char* read_scribe_file(char const* path);
@@ -41,7 +40,7 @@ static struct {
   bool value;
 }* pathset = (void*)0;
 
-static char* read_file_to_str(const char* path, unsigned int* file_len_out) {
+char* read_file_to_str(const char* path, unsigned int* file_len_out) {
   START_ZONE;
   FILE* file;
   int e;
@@ -185,7 +184,7 @@ static int execute_scribe_file(char const* path) {
   }
   JanetTable* env = lisp_init_env();
   lisp_register_module(env, "config", config_cfuns);
-  int rc = lisp_execute_script(env, contents);
+  int rc = lisp_execute_script(env, contents, (void*)0);
   free(contents);
   lisp_terminate();
   END_ZONE;

@@ -7,7 +7,7 @@
 
 #include "db.h"
 #include "lisp.h"
-#include "querier.h"
+#include "query.h"
 #include "trace.h"
 
 INIT_TRACE;

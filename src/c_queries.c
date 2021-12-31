@@ -3,7 +3,7 @@
 #include <tree_sitter/api.h>
 
 #include "lisp.h"
-#include "querier.h"
+#include "query.h"
 #include "trace.h"
 #include "tree_sitter.h"
 

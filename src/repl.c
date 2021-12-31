@@ -1,6 +1,6 @@
 #include "repl.h"
 
-#include "querier.h"
+#include "query.h"
 /*
  * Copyright (c) 2021 Calvin Rose
  *

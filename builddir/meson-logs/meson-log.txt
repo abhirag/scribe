@@ -1,4 +1,4 @@
-Build started at 2021-12-23T14:19:53.767814
+Build started at 2021-12-31T09:54:58.611421
 Main binary: /usr/bin/python3
 Build Options: -Dbackend=ninja
 Python system: Linux
@@ -95,7 +95,19 @@ C linker for the build machine: cc ld.bfd 2.34
 Build targets in project: 6
 Subproject mkdirp finished.
 
-Build targets in project: 11
+
+Executing subproject md4c 
+
+Project name: md4c
+Project version: undefined
+C compiler for the host machine: cc (gcc 9.3.0 "cc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0")
+C linker for the host machine: cc ld.bfd 2.34
+C compiler for the build machine: cc (gcc 9.3.0 "cc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0")
+C linker for the build machine: cc ld.bfd 2.34
+Build targets in project: 7
+Subproject md4c finished.
+
+Build targets in project: 13
 
 scribe 0.1
 
@@ -103,14 +115,15 @@ scribe 0.1
     janet      : YES
     lmdb       : YES
     log        : YES
+    md4c       : YES
     mkdirp     : YES
     sds        : YES
     tree_sitter: YES
 
 Found ninja-1.10.2 at /home/anurag/bin/ninja
 Running compile:
-Working directory:  /home/anurag/scribe/builddir/meson-private/tmpekaaacof
-Command line:  c++ /home/anurag/scribe/builddir/meson-private/tmpekaaacof/testfile.cpp -o /home/anurag/scribe/builddir/meson-private/tmpekaaacof/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+Working directory:  /home/anurag/scribe/builddir/meson-private/tmpu0frchuz
+Command line:  c++ /home/anurag/scribe/builddir/meson-private/tmpu0frchuz/testfile.cpp -o /home/anurag/scribe/builddir/meson-private/tmpu0frchuz/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
 
 Code:
  

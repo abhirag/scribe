@@ -25,7 +25,7 @@ bool db_exists(char const* path) {
   return false;
 }
 
-static sds get_language(void) {
+sds get_language(void) {
   START_ZONE;
   if (!db_exists(".")) {
     message_fatal(
