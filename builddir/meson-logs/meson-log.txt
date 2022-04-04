@@ -1,6 +1,6 @@
-Build started at 2021-12-31T09:54:58.611421
+Build started at 2022-02-19T10:16:59.074344
 Main binary: /usr/bin/python3
-Build Options: -Dbackend=ninja
+Build Options: -Dbackend=ninja -Dbuildtype=debug
 Python system: Linux
 The Meson build system
 Version: 0.59.2
@@ -122,8 +122,8 @@ scribe 0.1
 
 Found ninja-1.10.2 at /home/anurag/bin/ninja
 Running compile:
-Working directory:  /home/anurag/scribe/builddir/meson-private/tmpu0frchuz
-Command line:  c++ /home/anurag/scribe/builddir/meson-private/tmpu0frchuz/testfile.cpp -o /home/anurag/scribe/builddir/meson-private/tmpu0frchuz/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+Working directory:  /home/anurag/scribe/builddir/meson-private/tmpqroykjw1
+Command line:  c++ /home/anurag/scribe/builddir/meson-private/tmpqroykjw1/testfile.cpp -o /home/anurag/scribe/builddir/meson-private/tmpqroykjw1/output.obj -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
 
 Code:
  

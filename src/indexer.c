@@ -230,8 +230,8 @@ int index_files(char const* path) {
           finfo.path);
       goto error_end;
     }
-    rc = db_put(txn, db_handle, finfo.name, finfo.contents);
-    if (rc != 0) {
+    rc = db_interactive_put(txn, db_handle, finfo.name, finfo.contents);
+    if (rc < 0) {
       log_fatal("indexer::index_files failed in putting key: %s", finfo.name);
       goto error_end;
     }
@@ -243,13 +243,13 @@ int index_files(char const* path) {
     length_value = sdscatfmt(length_value, "%u", finfo.length);
     num_lines_key = sdscatfmt(num_lines_key, "%S::%s", finfo.name, "num_lines");
     num_lines_value = sdscatfmt(num_lines_value, "%u", finfo.num_lines);
-    rc = db_put(txn, db_handle, length_key, length_value);
-    if (rc != 0) {
+    rc = db_interactive_put(txn, db_handle, length_key, length_value);
+    if (rc < 0) {
       log_fatal("indexer::index_files failed in putting key: %s", length_key);
       goto error_end;
     }
-    rc = db_put(txn, db_handle, num_lines_key, num_lines_value);
-    if (rc != 0) {
+    rc = db_interactive_put(txn, db_handle, num_lines_key, num_lines_value);
+    if (rc < 0) {
       log_fatal("indexer::index_files failed in putting key: %s",
                 num_lines_key);
       goto error_end;
@@ -262,8 +262,8 @@ int index_files(char const* path) {
     goto error_end;
   }
   for (int i = 0; i < shlen(pathset); i += 1) {
-    rc = db_put(txn, db_handle_paths, pathset[i].key, "");
-    if (rc != 0) {
+    rc = db_interactive_put(txn, db_handle_paths, pathset[i].key, "");
+    if (rc < 0) {
       log_fatal("indexer::index_files failed in putting key: %s",
                 pathset[i].key);
       goto error_end;
@@ -328,8 +328,8 @@ int persist_project_details(char const* path) {
         "name: project");
     goto error_end;
   }
-  rc = db_put(txn, db_handle, "language", language);
-  if (rc != 0) {
+  rc = db_interactive_put(txn, db_handle, "language", language);
+  if (rc < 0) {
     log_fatal(
         "indexer::persist_project_details failed in putting key: language");
     goto error_end;

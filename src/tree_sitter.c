@@ -89,6 +89,75 @@ sds* query_tree(sds src, TSLanguage* lang, TSTree* tree, sds query_string) {
   return s_arr;
 error_end:
   ts_query_delete(query);
+  ts_query_cursor_delete(cursor);
+  END_ZONE;
+  return (void*)0;
+}
+
+sds query_filter_tree(sds src, TSLanguage* lang, TSTree* tree, sds query_string,
+                      char const* filter_string, int filter_index) {
+  START_ZONE;
+  sds return_src = (void*)0;
+  sds filter_src = (void*)0;
+  sds filter_string_sds = sdsnew(filter_string);
+  TSQueryCursor* cursor = (void*)0;
+  TSQuery* query = (void*)0;
+  TSNode root_node = ts_tree_root_node(tree);
+  TSQueryError err = {0};
+  uint32_t err_offset = 0;
+  query =
+      ts_query_new(lang, query_string, sdslen(query_string), &err_offset, &err);
+  if (!query) {
+    switch (err) {
+      case TSQueryErrorSyntax:
+        log_fatal(
+            "tree_sitter::query_filter_tree syntax error in query: %s at byte "
+            "offset: "
+            "%u",
+            query_string, err_offset);
+        break;
+      default:
+        message_fatal(
+            "tree_sitter::query_filter_tree failed in creating query");
+        break;
+    }
+    goto error_end;
+  }
+  cursor = ts_query_cursor_new();
+  if (!cursor) {
+    message_fatal("tree_sitter::query_filter_tree failed in creating cursor");
+    goto error_end;
+  }
+  ts_query_cursor_exec(cursor, query, root_node);
+  TSQueryMatch match = {0};
+  bool matches_remain = false;
+  do {
+    matches_remain = ts_query_cursor_next_match(cursor, &match);
+    if (matches_remain && (match.capture_count == 2)) {
+      filter_src = sdscatsds(sdsempty(), src);
+      TSNode filter_node = match.captures[filter_index].node;
+      uint32_t f_start_byte = ts_node_start_byte(filter_node);
+      uint32_t f_end_byte = ts_node_end_byte(filter_node);
+      sdsrange(filter_src, f_start_byte, f_end_byte - 1);
+      if (sdscmp(filter_src, filter_string_sds) == 0) {
+        return_src = sdscatsds(sdsempty(), src);
+        TSNode return_node = match.captures[!filter_index].node;
+        uint32_t r_start_byte = ts_node_start_byte(return_node);
+        uint32_t r_end_byte = ts_node_end_byte(return_node);
+        sdsrange(return_src, r_start_byte, r_end_byte - 1);
+        break;
+      }
+    }
+  } while (matches_remain);
+  sdsfree(filter_src);
+  sdsfree(filter_string_sds);
+  ts_query_delete(query);
+  ts_query_cursor_delete(cursor);
+  END_ZONE;
+  return return_src;
+error_end:
+  ts_query_delete(query);
+  ts_query_cursor_delete(cursor);
   END_ZONE;
   return (void*)0;
 }

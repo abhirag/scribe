@@ -1,5 +1,6 @@
 [options]
 backend = ninja
+buildtype = debug
 
 [properties]
 

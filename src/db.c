@@ -160,15 +160,103 @@ int db_put(MDB_txn* txn, MDB_dbi db_handle, char* key, char* value) {
   MDB_val key_val = {.mv_size = strlen(key) + 1, .mv_data = (void*)key};
   MDB_val data_val = {.mv_size = strlen(value) + 1, .mv_data = (void*)value};
   rc = mdb_put(txn, db_handle, &key_val, &data_val, flags);
-  if (rc != 0) {
-    if (rc == MDB_KEYEXIST) {
-      message_error("db::db_put key already exists");
-    } else {
-      message_error("db::db_put put failed");
-    }
+  if (rc != 0 && rc != MDB_KEYEXIST) {
+    message_error("db::db_put put failed");
   }
   END_ZONE;
   return rc;
+}
+
+int db_delete(MDB_txn* txn, MDB_dbi db_handle, char* key) {
+  START_ZONE;
+  int rc = 0;
+  MDB_val key_val = {.mv_size = strlen(key) + 1, .mv_data = (void*)key};
+  rc = mdb_del(txn, db_handle, &key_val, (void*)0);
+  if (rc == MDB_NOTFOUND) {
+    message_error("db::db_delete specified key is not in the database");
+  }
+  END_ZONE;
+  return rc;
+}
+
+int db_interactive_put(MDB_txn* txn, MDB_dbi db_handle, char* key,
+                       char* value) {
+  START_ZONE;
+  int rc = 0;
+  rc = db_put(txn, db_handle, key, value);
+  if (rc != 0 && rc != MDB_KEYEXIST) {
+    message_error("db::db_interactive_put put failed");
+    END_ZONE;
+    return rc;
+  }
+  if (rc == 0) {
+    END_ZONE;
+    return rc;
+  }
+  sds value_sds = sdsnew(value);
+  sds existing_value = db_get(txn, db_handle, key);
+  if (!existing_value) {
+    message_error("db::db_interactive_put get for existing key failed");
+    goto error_end;
+  }
+  if (sdscmp(value_sds, existing_value) == 0) {
+    printf(
+        "Key: %s already exists with the same value, skipping this put "
+        "operation\n",
+        key);
+    rc = 0;
+    goto end;
+  }
+  while (true) {
+    printf("Key: %s already exists\n", key);
+    printf(
+        "Press 1 for leaving key untouched\n"
+        "Press 2 for updating the key\n"
+        "Press 3 for peeking at values\n");
+    int c = getchar();
+    if (c == '1') {
+      while (getchar() != '\n') {
+      }
+      rc = 2;
+      goto end;
+    }
+    if (c == '2') {
+      while (getchar() != '\n') {
+      }
+      rc = db_delete(txn, db_handle, key);
+      if (rc != 0) {
+        message_error("db::db_interactive_put delete failed");
+        goto error_end;
+      }
+      rc = db_put(txn, db_handle, key, value);
+      if (rc != 0) {
+        message_error("db::db_interactive_put put failed");
+        goto error_end;
+      }
+      rc = 1;
+      goto end;
+    }
+    if (c == '3') {
+      printf("Existing value: \n%s\n", existing_value);
+      printf("Value you are trying to put: \n%s\n", value_sds);
+      while (getchar() != '\n') {
+      }
+    }
+    if (c == EOF) {
+      rc = 2;
+      goto end;
+    }
+  }
+end:
+  sdsfree(value_sds);
+  sdsfree(existing_value);
+  END_ZONE;
+  return rc;
+error_end:
+  sdsfree(value_sds);
+  sdsfree(existing_value);
+  END_ZONE;
+  return -1;
 }
 
 sds db_get(MDB_txn* txn, MDB_dbi db_handle, char* key) {

@@ -1,3 +1,4 @@
+#include <malloc.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -15,6 +16,7 @@ int main(int argc, char** argv) {
                           .is_ordered_list = false,
                           .current_index = 0};
   md_substitute(contents, strlen(contents), &d);
+  free(contents);
   FILE* fp = fopen("doc_out.md", "w");
   fprintf(fp, d.output);
   fclose(fp);

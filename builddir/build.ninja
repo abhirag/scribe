@@ -432,13 +432,13 @@ build meson-clean: CUSTOM_COMMAND PHONY
  COMMAND = /home/anurag/bin/ninja -t clean
  description = Cleaning
 
-build build.ninja: REGENERATE_BUILD ../subprojects/mkdirp/meson.build ../subprojects/tree_sitter/meson.build ../meson.build ../subprojects/janet/meson.build ../subprojects/lmdb/meson.build ../subprojects/sds/meson.build ../subprojects/md4c/meson.build ../subprojects/log/meson.build ../tests/meson.build meson-private/coredata.dat
+build build.ninja: REGENERATE_BUILD ../subprojects/mkdirp/meson.build ../subprojects/janet/meson.build ../subprojects/sds/meson.build ../subprojects/tree_sitter/meson.build ../subprojects/md4c/meson.build ../meson.build ../subprojects/log/meson.build ../subprojects/lmdb/meson.build ../tests/meson.build meson-private/coredata.dat
  pool = console
 
 build reconfigure: REGENERATE_BUILD PHONY
  pool = console
 
-build ../subprojects/mkdirp/meson.build ../subprojects/tree_sitter/meson.build ../meson.build ../subprojects/janet/meson.build ../subprojects/lmdb/meson.build ../subprojects/sds/meson.build ../subprojects/md4c/meson.build ../subprojects/log/meson.build ../tests/meson.build meson-private/coredata.dat: phony 
+build ../subprojects/mkdirp/meson.build ../subprojects/janet/meson.build ../subprojects/sds/meson.build ../subprojects/tree_sitter/meson.build ../subprojects/md4c/meson.build ../meson.build ../subprojects/log/meson.build ../subprojects/lmdb/meson.build ../tests/meson.build meson-private/coredata.dat: phony 
 
 default all
 

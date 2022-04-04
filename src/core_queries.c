@@ -183,6 +183,59 @@ error_end:
   return -1;
 }
 
+static int print_lines(JanetString src) {
+  START_ZONE;
+  if (!src) {
+    END_ZONE;
+    return -1;
+  }
+  sds* lines = (void*)0;
+  sds src_sds = sdsnew(src);
+  sds numbered_src_slice = sdsempty();
+  int count = 0;
+  lines = sdssplitlen(src_sds, sdslen(src_sds), "\n", 1, &count);
+  for (int i = 0; i < count; i += 1) {
+    numbered_src_slice =
+        sdscatfmt(numbered_src_slice, "%i. %S\n", i + 1, lines[i]);
+  }
+  printf("%s", numbered_src_slice);
+  sdsfree(src_sds);
+  sdsfree(numbered_src_slice);
+  sdsfreesplitres(lines, count);
+  END_ZONE;
+  return 0;
+}
+
+static sds get_src_slice(JanetString src, int64_t start_line,
+                         int64_t end_line) {
+  START_ZONE;
+  sds* lines = (void*)0;
+  sds src_sds = sdsnew(src);
+  sds src_slice = sdsempty();
+  int count = 0;
+  lines = sdssplitlen(src_sds, sdslen(src_sds), "\n", 1, &count);
+  if (end_line > count) {
+    log_fatal(
+        "core_queries::get_src_slice invalid argument: end_line=%d is "
+        "greater than number of lines=%d",
+        (int)end_line, (int)count);
+    goto error_end;
+  }
+  for (int i = (start_line - 1); i < (end_line - 1); i += 1) {
+    src_slice = sdscatfmt(src_slice, "%S\n", lines[i]);
+  }
+  src_slice = sdscatfmt(src_slice, "%S", lines[end_line - 1]);
+  sdsfree(src_sds);
+  sdsfreesplitres(lines, count);
+  END_ZONE;
+  return src_slice;
+error_end:
+  sdsfree(src_sds);
+  sdsfreesplitres(lines, count);
+  END_ZONE;
+  return (void*)0;
+}
+
 static sds get_file_src_slice(JanetString path, JanetString name,
                               int64_t start_line, int64_t end_line) {
   START_ZONE;
@@ -209,10 +262,10 @@ static sds get_file_src_slice(JanetString path, JanetString name,
     goto error_end;
   }
   lines = sdssplitlen(file_src, sdslen(file_src), "\n", 1, &count);
-  for (int i = (start_line - 1); i < end_line; i += 1) {
+  for (int i = (start_line - 1); i < (end_line - 1); i += 1) {
     file_src_slice = sdscatfmt(file_src_slice, "%S\n", lines[i]);
   }
-  file_src_slice = sdscatfmt(file_src_slice, "%S", lines[end_line]);
+  file_src_slice = sdscatfmt(file_src_slice, "%S", lines[end_line - 1]);
   sdsfree(file_src);
   sdsfreesplitres(lines, count);
   END_ZONE;
@@ -296,6 +349,45 @@ static Janet cfun_file_src_slice(int32_t argc, Janet* argv) {
   return janet_wrap_string(jstr);
 }
 
+static Janet cfun_src_slice(int32_t argc, Janet* argv) {
+  janet_fixarity(argc, 3);
+  if (!db_exists(".")) {
+    janet_panicf("scribe db not found in the current directory");
+  }
+  JanetString src = janet_getstring(argv, 0);
+  int64_t start_line = janet_getinteger64(argv, 1);
+  int64_t end_line = janet_getinteger64(argv, 2);
+  if (start_line <= 0) {
+    janet_panicf("start-line needs to be >= 1");
+  }
+  if (end_line <= 0) {
+    janet_panicf("end-line needs to be >= 1");
+  }
+  if (end_line < start_line) {
+    janet_panicf("end-line needs to be >= start-line");
+  }
+  sds src_slice = get_src_slice(src, start_line, end_line);
+  if (!src_slice) {
+    janet_panicf("failed in getting the slice");
+  }
+  const uint8_t* jstr = janet_string(src_slice, sdslen(src_slice));
+  sdsfree(src_slice);
+  return janet_wrap_string(jstr);
+}
+
+static Janet cfun_print_lines(int32_t argc, Janet* argv) {
+  janet_fixarity(argc, 1);
+  if (!db_exists(".")) {
+    janet_panicf("scribe db not found in the current directory");
+  }
+  JanetString src = janet_getstring(argv, 0);
+  int rc = print_lines(src);
+  if (rc == -1) {
+    janet_panicf("failed in printing src");
+  }
+  return janet_wrap_nil();
+}
+
 static const JanetReg core_cfuns[] = {
     {"file-src", cfun_file_src, "(core/file-src)\n\nGet the file source."},
     {"list-paths", cfun_list_paths,
@@ -304,6 +396,10 @@ static const JanetReg core_cfuns[] = {
      "(core/list-files)\n\nList the files in the directory."},
     {"file-src-slice", cfun_file_src_slice,
      "(core/file-src-slice)\n\nGet the file source sliced by line nums."},
+    {"src-slice", cfun_src_slice,
+     "(core/src-slice)\n\nGet the source sliced by line nums."},
+    {"print-lines", cfun_print_lines,
+     "(core/print-lines)\n\nPrint the source with linums"},
 };
 
 void register_core_module(JanetTable* env) {

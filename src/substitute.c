@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+#include "db.h"
 #include "lisp.h"
 #include "query.h"
 #include "trace.h"
@@ -270,17 +271,50 @@ static int accumulate_code_text(MD_CHAR* text, MD_SIZE size,
 static int process_scribe_code_block(MD_BLOCK_CODE_DETAIL* detail,
                                      md_substitute_data* data) {
   START_ZONE;
+  MDB_env* db_env = db_env_init("./scribe_db", false, 100);
+  if (!db_env) {
+    message_fatal(
+        "substitute::process_scribe_code_block failed in creating db "
+        "environment");
+    goto error_end;
+  }
+  MDB_txn* txn = db_txn_init(db_env, false);
+  if (!txn) {
+    message_fatal(
+        "substitute::process_scribe_code_block failed in creating transaction");
+    goto error_end;
+  }
+  MDB_dbi db_handle = db_get_handle(txn, "query", true);
+  if (db_handle == 0) {
+    message_fatal(
+        "substitute::process_scribe_code_block failed in creating db handle "
+        "for name: query");
+    goto error_end;
+  }
   sds lang = get_language();
   JanetTable* env = lisp_init_env();
   register_modules(env);
   Janet out = {0};
   int rc = lisp_execute_script(env, data->code_text, &out);
+  JanetString jstr = janet_getstring(&out, 0);
   if (rc != 0) {
     message_fatal(
         "substitute::process_scribe_code_block failed in code execution");
     goto end;
   }
-  JanetString jstr = janet_getstring(&out, 0);
+  int db_rc = db_interactive_put(txn, db_handle, data->code_text, jstr);
+  if (db_rc < 0) {
+    log_fatal("substitute::process_scribe_code_block failed in putting key: %s",
+              data->code_text);
+    goto error_end;
+  }
+  if (db_rc == 2) {
+    log_fatal(
+        "substitute::process_scribe_code_block db drift detected, fix to "
+        "continue");
+    rc = -1;
+    goto end;
+  }
   rc = render_verbatim("```", data);
   if (rc == -1) {
     goto end;
@@ -301,6 +335,9 @@ static int process_scribe_code_block(MD_BLOCK_CODE_DETAIL* detail,
   if (rc == -1) {
     goto end;
   }
+error_end:
+  END_ZONE;
+  return -1;
 end:
   sdsfree(lang);
   lisp_terminate();
@@ -334,7 +371,7 @@ static int process_code_block(MD_BLOCK_CODE_DETAIL* detail,
   if (rc == -1) {
     goto end;
   }
-  rc = render_verbatim("```", data);
+  rc = render_verbatim("```\n", data);
   if (rc == -1) {
     goto end;
   }
@@ -375,7 +412,8 @@ static int enter_block_callback(MD_BLOCKTYPE type, void* detail,
         return -1;
       }
       break;
-    case MD_BLOCK_CODE:  // noop
+    case MD_BLOCK_CODE:
+      sdsclear(d->code_text);
       break;
     case MD_BLOCK_P:  // noop
       break;
